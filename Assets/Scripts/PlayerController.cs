@@ -1,25 +1,49 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    float _speed = 10.0f;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Managers.input.keyAction -= OnKeyboard;
+        Managers.input.keyAction += OnKeyboard;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+    }
+
+    void OnKeyboard()
+    {
         if (Input.GetKey(KeyCode.W))
-            transform.position -= new Vector3(0.0f, 0.0f, 0.1f);
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.2f);
+            transform.position += Vector3.forward * Time.deltaTime * _speed;
+        }
+
         if (Input.GetKey(KeyCode.S))
-            transform.position += new Vector3(0.0f, 0.0f, 0.1f);
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.2f);
+            transform.position += Vector3.back * Time.deltaTime * _speed;
+        }
+
         if (Input.GetKey(KeyCode.A))
-            transform.position += new Vector3(0.1f, 0.0f, 0.0f);
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.2f);
+            transform.position += Vector3.left * Time.deltaTime * _speed;
+        }
+
         if (Input.GetKey(KeyCode.D))
-            transform.position -= new Vector3(0.1f, 0.0f, 0.0f);
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.2f);
+            transform.position += Vector3.right * Time.deltaTime * _speed;
+        }
     }
 }
+
